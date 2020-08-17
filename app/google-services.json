@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "492445363818",
+    "firebase_url": "https://joesoftconsulting-db-99bd8.firebaseio.com",
+    "project_id": "joesoftconsulting-db-99bd8",
+    "storage_bucket": "joesoftconsulting-db-99bd8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492445363818:android:f3a7466bfd12e23e18a413",
+        "android_client_info": {
+          "package_name": "com.joesoft.joesoftconsulting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "492445363818-sjfe4bg65h1ll97vo7b2seio1jt8b1em.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.joesoft.joesoftconsulting",
+            "certificate_hash": "0bc48fa699fe5f591418045420d1d8bbb6fe6dc9"
+          }
+        },
+        {
+          "client_id": "492445363818-98ahaumcvh3vbmbp0eqkog1j734d5fta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-3Cexit3VlsiQnap4OLGOKoede47E1Ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "492445363818-98ahaumcvh3vbmbp0eqkog1j734d5fta.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
