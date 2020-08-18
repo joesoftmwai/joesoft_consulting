@@ -36,6 +36,8 @@ import com.squareup.picasso.Picasso;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        setUpFirebaseAuth();
+
         mlImageLogo = findViewById(R.id.ivl_logo);
         mlEditEmail = findViewById(R.id.etl_email);
         mlEditPassword = findViewById(R.id.etl_password);
@@ -45,10 +47,10 @@ import com.squareup.picasso.Picasso;
         mlTextResendVerification = findViewById(R.id.tvl_resend_verification_email);
 
         loadAppLogo();
-        setUpFirebaseAuth();
 
         mlTextRegister.setOnClickListener(this);
         mlBtnSignIn.setOnClickListener(this);
+        mlTextResendVerification.setOnClickListener(this);
     }
 
      private void loadAppLogo() {
@@ -83,6 +85,15 @@ import com.squareup.picasso.Picasso;
                Toast.makeText(getApplicationContext(), "You didn't fill all fields", Toast.LENGTH_SHORT).show();
            }
        }
+
+       if (view.getId() == R.id.tvl_resend_verification_email) {
+           openDialog();
+       }
+     }
+
+     private void openDialog() {
+        ResendVerificationDialog verificationDialog = new ResendVerificationDialog();
+        verificationDialog.show(getSupportFragmentManager(), "Resend Verification Dialog");
      }
 
      // set up firebase auth
@@ -92,7 +103,16 @@ import com.squareup.picasso.Picasso;
             public void onAuthStateChanged(@NonNull FirebaseAuth auth) {
                 FirebaseUser user = auth.getCurrentUser();
                 if (user != null) {
-                    Log.d(TAG, "onAuthStateChanged: signed_in " + user.getUid());
+                    if (user.isEmailVerified()) {
+                        Log.d(TAG, "onAuthStateChanged: signed_in " + user.getUid());
+                        Toast.makeText(getApplicationContext(), "Authenticated with"
+                                + user.getEmail(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Check your email box for a verification link"
+                                + user.getEmail(), Toast.LENGTH_SHORT).show();
+                        FirebaseAuth.getInstance().signOut();
+
+                    }
                 } else {
                     Log.d(TAG, "onAuthStateChanged: Signed_out");
                 }
@@ -114,4 +134,5 @@ import com.squareup.picasso.Picasso;
          }
 
      }
+
  }

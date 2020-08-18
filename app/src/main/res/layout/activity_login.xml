@@ -63,7 +63,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/common_signin_button_text"
+        android:text="Sign In"
         app:layout_constraintEnd_toEndOf="@+id/etl_password"
         app:layout_constraintStart_toStartOf="@+id/etl_password"
         app:layout_constraintTop_toBottomOf="@+id/etl_password" />

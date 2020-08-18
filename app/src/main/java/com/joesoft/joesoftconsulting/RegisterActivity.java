@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -17,6 +18,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "RegisterActivity";
@@ -72,19 +74,35 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     if (task.isSuccessful()) {
                         Log.d(TAG, "onComplete: AuthState " + FirebaseAuth.getInstance().getCurrentUser().getUid());
                         Toast.makeText(RegisterActivity.this, "User Registered successfully", Toast.LENGTH_SHORT).show();
+
+                        sendVerificationEmail();
                         FirebaseAuth.getInstance().signOut();
-                        finish();
+
+                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+
+                    } else {
+                        Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-        });
+            });
     }
 
-    private boolean validateEmail(TextView email) {
+    public void sendVerificationEmail() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(),"Sent verification email", Toast.LENGTH_SHORT).show();
+                    } else  {
+                        Toast.makeText(getApplicationContext(), "Could not Sent verification email", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+    public boolean validateEmail(TextView email) {
         String emailInput = email.getText().toString();
         if (Patterns.EMAIL_ADDRESS.matcher(emailInput).matches())
             return true;
