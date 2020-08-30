@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,9 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "RegisterActivity";
     private FirebaseAuth mAuth;
-    private TextView mrTextEmail;
-    private TextView mrTextPassword;
-    private TextView mrTextConfirmPassword;
+    private EditText mrEditEmail, mrEditPassword, mrEditConfirmPassword;
     private Button mrBtnRegister;
 
     @Override
@@ -36,9 +35,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        mrTextEmail = findViewById(R.id.etr_email);
-        mrTextPassword = findViewById(R.id.etr_password);
-        mrTextConfirmPassword = findViewById(R.id.etr_confirm_password);
+        mrEditEmail = findViewById(R.id.etr_email);
+        mrEditPassword = findViewById(R.id.etr_password);
+        mrEditConfirmPassword = findViewById(R.id.etr_confirm_password);
         mrBtnRegister = findViewById(R.id.btnr_register);
 
         mrBtnRegister.setOnClickListener(this);
@@ -57,13 +56,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         if (view.getId() == R.id.btnr_register) {
             Log.d(TAG, "onClick: Attempting to register");
-            if (!mrTextEmail.getText().toString().isEmpty() && !mrTextPassword.getText().toString().isEmpty()
-                    && !mrTextConfirmPassword.getText().toString().isEmpty()) {
+            if (!mrEditEmail.getText().toString().isEmpty() && !mrEditPassword.getText().toString().isEmpty()
+                    && !mrEditConfirmPassword.getText().toString().isEmpty()) {
 
-                if(validateEmail(mrTextEmail)){
+                if(validateEmail(mrEditEmail)){
                     // check if passwords match
-                    if (mrTextPassword.getText().toString().equals(mrTextConfirmPassword.getText().toString())){
-                        registerNewEmail(mrTextEmail.getText().toString(), mrTextPassword.getText().toString());
+                    if (mrEditPassword.getText().toString().equals(mrEditConfirmPassword.getText().toString())){
+                        registerNewEmail(mrEditEmail.getText().toString(), mrEditPassword.getText().toString());
                     } else {
                         Toast.makeText(RegisterActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
                     }
@@ -127,7 +126,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (Patterns.EMAIL_ADDRESS.matcher(emailInput).matches())
             return true;
 
-        mrTextEmail.setError("Invalid email address");
+        mrEditEmail.setError("Invalid email address");
         return false;
     }
 

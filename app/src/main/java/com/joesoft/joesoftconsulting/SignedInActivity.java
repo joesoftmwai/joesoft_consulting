@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.accessibility.AccessibilityEvent;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,12 +19,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.squareup.picasso.Picasso;
 
 public class SignedInActivity extends AppCompatActivity {
 
     private static final String TAG = SignedInActivity.class.getSimpleName();
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
+    private ImageView mSignedInImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +34,15 @@ public class SignedInActivity extends AppCompatActivity {
 
         setUpFirebaseAuth();
 
+        mSignedInImage = findViewById(R.id.signedInImage);
+        loadSignedInImage();
+
         getUserDetails();
         // setUserDetails();
+    }
+
+    private void loadSignedInImage() {
+        Picasso.get().load(R.drawable.executive_summary).into(mSignedInImage);
     }
 
     @Override
@@ -109,22 +120,13 @@ public class SignedInActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth auth) {
                 FirebaseUser user = auth.getCurrentUser();
                 if (user != null) {
-                    if (user.isEmailVerified()) {
-                        Log.d(TAG, "onAuthStateChanged: signed_in " + user.getUid());
-                        Toast.makeText(getApplicationContext(), "Authenticated with"
-                                + user.getEmail(), Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(SignedInActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Check your email box for a verification link"
-                                + user.getEmail(), Toast.LENGTH_SHORT).show();
-                        FirebaseAuth.getInstance().signOut();
-
-                    }
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
-                    Log.d(TAG, "onAuthStateChanged: Signed_out");
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    Intent intent = new Intent(SignedInActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
                 }
             }
         };
@@ -142,6 +144,9 @@ public class SignedInActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_signout) {
             FirebaseAuth.getInstance().signOut();
+        } else if(id == R.id.action_account_settings) {
+            Intent intent = new Intent(SignedInActivity.this, AccountSettingsActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Joesoft Consulting</string>
     <string name="email_registration">Email Registration</string>
+    <string name="name_hint">Name</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+    <string name="phone_hint">Phone</string>
     <string name="confirm_password_hint">Confirm Password</string>
 </resources>

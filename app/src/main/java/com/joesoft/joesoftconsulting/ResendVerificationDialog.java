@@ -101,9 +101,9 @@ public class ResendVerificationDialog extends AppCompatDialogFragment {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()) {
-                        Toast.makeText(getActivity(),"Sent verification email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mView.getContext(),"Sent verification email", Toast.LENGTH_LONG).show();
                     } else  {
-                        Toast.makeText(getActivity(), "Could not Sent verification email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mView.getContext(), "Could not Sent verification email", Toast.LENGTH_LONG).show();
                     }
                 }
             });

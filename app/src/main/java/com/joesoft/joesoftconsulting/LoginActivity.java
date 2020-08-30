@@ -51,6 +51,7 @@ import com.squareup.picasso.Picasso;
         mlTextRegister.setOnClickListener(this);
         mlBtnSignIn.setOnClickListener(this);
         mlTextResendVerification.setOnClickListener(this);
+        mlTextForgotPassword.setOnClickListener(this);
     }
 
      private void loadAppLogo() {
@@ -72,7 +73,9 @@ import com.squareup.picasso.Picasso;
                            @Override
                            public void onComplete(@NonNull Task<AuthResult> task) {
                                if (task.isSuccessful()) {
-                                   Toast.makeText(getApplicationContext(), "Signed in", Toast.LENGTH_SHORT).show();
+                                   Intent intent = new Intent(LoginActivity.this, SignedInActivity.class);
+                                   startActivity(intent);
+                                   finish();
                                }
                            }
                        }).addOnFailureListener(new OnFailureListener() {
@@ -89,6 +92,15 @@ import com.squareup.picasso.Picasso;
        if (view.getId() == R.id.tvl_resend_verification_email) {
            openDialog();
        }
+
+       if (view.getId() == R.id.tvl_forgot_password) {
+           openPasswordResetDiaog();
+       }
+     }
+
+     private void openPasswordResetDiaog() {
+         PasswordResetDialog passwordResetDialog = new PasswordResetDialog();
+         passwordResetDialog.show(getSupportFragmentManager(), "Password Reset Dialog");
      }
 
      private void openDialog() {
@@ -105,10 +117,23 @@ import com.squareup.picasso.Picasso;
                 if (user != null) {
                     if (user.isEmailVerified()) {
                         Log.d(TAG, "onAuthStateChanged: signed_in " + user.getUid());
-                        Toast.makeText(getApplicationContext(), "Authenticated with"
+                        Toast.makeText(getApplicationContext(), "Authenticated with "
                                 + user.getEmail(), Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(LoginActivity.this, SignedInActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                        //check for extras from FCM
+                        if (getIntent().getExtras() != null) {
+                            Log.d(TAG, "initFCM: found intent extras: " + getIntent().getExtras().toString());
+                            for (String key : getIntent().getExtras().keySet()) {
+                                Object value = getIntent().getExtras().get(key);
+                                Log.d(TAG, "initFCM: Key: " + key + " Value: " + value);
+                            }
+                            String data = getIntent().getStringExtra("data");
+                            Log.d(TAG, "initFCM: data: " + data);
+                        }
+
                         startActivity(intent);
                         finish();
                     } else {
