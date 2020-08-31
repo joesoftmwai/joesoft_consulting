@@ -2,8 +2,12 @@ package com.joesoft.joesoftconsulting;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -27,6 +31,7 @@ import com.joesoft.joesoftconsulting.models.User;
 
 public class AccountSettingsActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "AccountSettingsActivity";
+    public static final int REQUEST_CODE = 123;
 
     private ImageView mImageAccountSettings;
     private EditText masEditName, masEditPhone, masEditEmail, masEditConfirmPassword;
@@ -34,6 +39,7 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
     private TextView masTextChangePassword;
 
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private boolean mStoragePermission;
 
     @Override
     protected void onStart() {
@@ -73,9 +79,11 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
         masEditConfirmPassword = findViewById(R.id.etasConfirmPassword);
         masTextChangePassword = findViewById(R.id.tvasChangePassword);
 
+        mImageAccountSettings.setOnClickListener(this);
         masTextChangePassword.setOnClickListener(this);
         masBtnSave.setOnClickListener(this);
 
+        verifyStoragePermission();
         setUpFirebaseAuth();
         setUpCurrentEmail();
 
@@ -206,10 +214,17 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
             }
         }
 
-
         if (view.getId() == R.id.tvasChangePassword) {
             Toast.makeText(getApplicationContext(),
                     "Change password clicked", Toast.LENGTH_SHORT).show();
+        }
+
+        if (view.getId() == R.id.imageAccountSettings) {
+            if (mStoragePermission) {
+
+            } else {
+                verifyStoragePermission();
+            }
         }
     }
 
@@ -224,5 +239,41 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
 
         masEditEmail.setError("Invalid email address");
         return false;
+    }
+
+    /**
+     * --------- General method for requesting permissions -----------
+     */
+    public void verifyStoragePermission() {
+        String[] permissions = {
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
+        };
+
+        if (ContextCompat.checkSelfPermission(
+                getApplicationContext(), permissions[0]) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(
+                getApplicationContext(), permissions[1]) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(
+                getApplicationContext(), permissions[2]) == PackageManager.PERMISSION_GRANTED) {
+            mStoragePermission = true;
+        } else {
+            ActivityCompat.requestPermissions(
+                    AccountSettingsActivity.this, permissions, REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: Request code: " + requestCode);
+        switch (requestCode) {
+            case REQUEST_CODE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "onRequestPermissionsResult: " +
+                            "User has been granted permision to access: " + permissions[0]);
+                }
+                break;
+        }
     }
 }
