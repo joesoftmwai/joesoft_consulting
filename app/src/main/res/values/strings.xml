@@ -6,4 +6,16 @@
     <string name="password_hint">Password</string>
     <string name="phone_hint">Phone</string>
     <string name="confirm_password_hint">Confirm Password</string>
+
+    <!--db-nodes-->
+    <string name="node_users">users</string>
+    <string name="node_chatrooms">chatrooms</string>
+
+    <!--db-users fields-->
+    <string name="field_name">name</string>
+    <string name="field_phone">phone</string>
+    <string name="field_profile_image">profile_image</string>
+    <string name="field_security_level">security_level</string>
+    <string name="field_user_id">user_id</string>
+
 </resources>

@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.joesoft.joesoftconsulting.models.User;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "RegisterActivity";
@@ -34,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
 
         mrEditEmail = findViewById(R.id.etr_email);
         mrEditPassword = findViewById(R.id.etr_password);
@@ -73,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void registerNewEmail(String email, String password) {
+    private void registerNewEmail(final String email, String password) {
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -82,13 +85,42 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            // FirebaseUser user = mAuth.getCurrentUser();
 
                             sendVerificationEmail();
-                            mAuth.signOut();
 
-                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                            finish();
+                            User user = new User();
+                            user.setName(email.substring(0, email.indexOf("@")));
+                            user.setPhone("1");
+                            user.setProfile_image("");
+                            user.setSecurity_level("1");
+                            user.setUser_id(mAuth.getCurrentUser().getUid());
+
+                            FirebaseDatabase.getInstance().getReference()
+                                   .child(getString(R.string.node_users))
+                                   .child(mAuth.getCurrentUser().getUid())
+                                   .setValue(user)
+                                   .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                       @Override
+                                       public void onComplete(@NonNull Task<Void> task) {
+                                           mAuth.signOut();
+                                           redirectToLoginScreen();
+                                       }
+                                   })
+                                   .addOnFailureListener(new OnFailureListener() {
+                                       @Override
+                                       public void onFailure(@NonNull Exception e) {
+                                           mAuth.signOut();
+                                           redirectToLoginScreen();
+                                           Log.d(TAG, "onFailure: " + e.getMessage());
+                                           Toast.makeText(RegisterActivity.this, "Something went wrong; "
+                                                   + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                       }
+                                   });
+
+
+
+
 
 
                         } else {
@@ -106,6 +138,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    private void redirectToLoginScreen() {
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void sendVerificationEmail() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
@@ -121,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             });
         }
     }
-    public boolean validateEmail(TextView email) {
+    public boolean validateEmail(EditText email) {
         String emailInput = email.getText().toString();
         if (Patterns.EMAIL_ADDRESS.matcher(emailInput).matches())
             return true;
