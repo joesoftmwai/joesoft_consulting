@@ -26,7 +26,7 @@ public class SignedInActivity extends AppCompatActivity {
     private static final String TAG = SignedInActivity.class.getSimpleName();
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
-    private ImageView mSignedInImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,16 +34,13 @@ public class SignedInActivity extends AppCompatActivity {
 
         setUpFirebaseAuth();
 
-        mSignedInImage = findViewById(R.id.signedInImage);
-        loadSignedInImage();
+
 
         getUserDetails();
         // setUserDetails();
     }
 
-    private void loadSignedInImage() {
-        Picasso.get().load(R.drawable.executive_summary).into(mSignedInImage);
-    }
+
 
     @Override
     protected void onResume() {
