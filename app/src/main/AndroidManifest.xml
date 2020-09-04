@@ -16,7 +16,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AccountSettingsActivity"></activity>
+        <activity android:name=".issues.IssueDetailActivity"></activity>
+        <activity android:name=".issues.ProjectDetailsActivity" />
+        <activity
+            android:name=".issues.NewProjectActivity"
+            android:label="New Project" />
+        <activity
+            android:name=".issues.NewIssueActivity"
+            android:label="New Issue" />
+        <activity
+            android:name=".issues.IssuesActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AccountSettingsActivity" />
         <activity android:name=".SignedInActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">

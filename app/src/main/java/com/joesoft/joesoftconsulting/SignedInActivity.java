@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.joesoft.joesoftconsulting.issues.IssuesActivity;
 import com.squareup.picasso.Picasso;
 
 public class SignedInActivity extends AppCompatActivity {
@@ -143,6 +144,9 @@ public class SignedInActivity extends AppCompatActivity {
             FirebaseAuth.getInstance().signOut();
         } else if(id == R.id.action_account_settings) {
             Intent intent = new Intent(SignedInActivity.this, AccountSettingsActivity.class);
+            startActivity(intent);
+        } else if(id == R.id.action_issues) {
+            Intent intent = new Intent(SignedInActivity.this, IssuesActivity.class);
             startActivity(intent);
         }
 
