@@ -14,7 +14,6 @@ import com.joesoft.joesoftconsulting.R;
 
 
 public class ProjectsFragment extends Fragment implements View.OnClickListener {
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

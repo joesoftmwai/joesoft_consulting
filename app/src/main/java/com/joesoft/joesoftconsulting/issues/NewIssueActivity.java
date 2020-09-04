@@ -26,6 +26,17 @@ public class NewIssueActivity extends AppCompatActivity {
         mtietSummary = findViewById(R.id.tiet_summary);
         mSpinnerIssueType = findViewById(R.id.spinner_issue_type);
         mSpinnerPriority = findViewById(R.id.spinner_priority);
+
+        initIssueTypeSpinner();
+        initPrioritySpinner();
+    }
+
+    private void initIssueTypeSpinner() {
+
+    }
+
+    private void initPrioritySpinner() {
+
     }
 
     @Override
