@@ -4,6 +4,7 @@ import com.joesoft.joesoftconsulting.R;
 import com.joesoft.joesoftconsulting.models.Issue;
 
 public class SpinnerResource {
+
     public static final String[] issue_priorities_spinner = {
             Issue.HIGH,
             Issue.MEDIUM,

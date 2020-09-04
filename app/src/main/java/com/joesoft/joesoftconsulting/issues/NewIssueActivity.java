@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.joesoft.joesoftconsulting.R;
+import com.joesoft.joesoftconsulting.utility.SpinnerResource;
 
 public class NewIssueActivity extends AppCompatActivity {
     private TextInputEditText mtietAssignToProject, mtietSummary, mtietIssueDescription;
@@ -32,10 +35,17 @@ public class NewIssueActivity extends AppCompatActivity {
     }
 
     private void initIssueTypeSpinner() {
-
+        String[] issueTypes = SpinnerResource.issue_types_spinner;
+        ArrayAdapter<String> issueTypeAdapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_dropdown_item, issueTypes);
+        mSpinnerIssueType.setAdapter(issueTypeAdapter);
     }
 
     private void initPrioritySpinner() {
+        String[] issuePriorities = SpinnerResource.issue_priorities_spinner;
+        ArrayAdapter<String> issuePrioritiesAdapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_dropdown_item, issuePriorities);
+        mSpinnerPriority.setAdapter(issuePrioritiesAdapter);
 
     }
 

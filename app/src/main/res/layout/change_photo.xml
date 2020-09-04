@@ -25,9 +25,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:text="Take a photo"
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tvChoosePhoto"
         app:layout_constraintStart_toStartOf="@+id/tvChoosePhoto"
         app:layout_constraintTop_toBottomOf="@+id/tvChoosePhoto" />
