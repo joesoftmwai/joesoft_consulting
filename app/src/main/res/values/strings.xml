@@ -27,5 +27,12 @@
     <string name="field_security_level">security_level</string>
     <string name="field_user_id">user_id</string>
 
+    <!-- collections-->
+    <string name="collection_projects">projects</string>
+    <string name="collection_issues">issues</string>
+
+    <string name="intent_snackbar_message">Snackbar message</string>
+    <string name="created_new_project">Created new project</string>
+
 
 </resources>

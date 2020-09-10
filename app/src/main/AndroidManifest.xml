@@ -16,8 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".issues.IssueDetailActivity"></activity>
-        <activity android:name=".issues.ProjectDetailsActivity" />
+        <activity android:name=".issues.IssueDetailActivity" android:label="Issue Detail" />
+        <activity android:name=".issues.ProjectDetailsActivity" android:label="Project Detail"/>
         <activity
             android:name=".issues.NewProjectActivity"
             android:label="New Project" />
@@ -27,9 +27,9 @@
         <activity
             android:name=".issues.IssuesActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AccountSettingsActivity" />
-        <activity android:name=".SignedInActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".AccountSettingsActivity" android:label="Profile"/>
+        <activity android:name=".SignedInActivity" android:label="Dashboard"/>
+        <activity android:name=".RegisterActivity" android:label="Sign up"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

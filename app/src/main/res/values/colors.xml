@@ -8,5 +8,6 @@
     <color name="colorHotPink">#FF69B4</color>
     <color name="colorRed">#FF0000</color>
     <color name="colorGreen">#32CD32</color>
-    <color name="colorYellow">#FFFF00</color>
+    <color name="colorYellow">#eeff1b</color>
+    <color name="colorOrange">#ffa500</color>
 </resources>

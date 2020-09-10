@@ -7,17 +7,17 @@
     android:padding="7dp">
 
     <ImageView
-        android:id="@+id/spinner_image"
+        android:id="@+id/spinner_img_image"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/screen_background_light_transparent" />
+        app:srcCompat="@drawable/ic_camera_black_24dp" />
 
     <TextView
-        android:id="@+id/spinner_text"
+        android:id="@+id/spinner_txt_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -25,8 +25,8 @@
         android:text="TextView"
         android:textColor="@color/colorBlack"
         android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner_image"
+        app:layout_constraintBottom_toBottomOf="@+id/spinner_img_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinner_image"
-        app:layout_constraintTop_toTopOf="@+id/spinner_image" />
+        app:layout_constraintStart_toEndOf="@+id/spinner_img_image"
+        app:layout_constraintTop_toTopOf="@+id/spinner_img_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

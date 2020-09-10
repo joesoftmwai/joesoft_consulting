@@ -49,20 +49,25 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.layout_spinner_image_and_text, parent, false);
 
-            viewHolder.mSpinnerImage = convertView.findViewById(R.id.spinner_image);
-            viewHolder.mSpinnerText = convertView.findViewById(R.id.spinner_text);
+            viewHolder.mSpinnerImage = convertView.findViewById(R.id.spinner_img_image);
+            viewHolder.mSpinnerText = convertView.findViewById(R.id.spinner_txt_text);
+
+            convertView.setTag(viewHolder);
+
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         if (mSpinnerImageIntegers != null) {
             Picasso.get()
-                    .load(mSpinnerImageIntegers[0])
+                    .load(mSpinnerImageIntegers[position])
+                    .placeholder(mSpinnerImageIntegers[position])
                     .fit().centerCrop()
                     .into(viewHolder.mSpinnerImage);
         } else if (mSpinnerImageStrings != null) {
             Picasso.get()
-                    .load(mSpinnerImageStrings[0])
+                    .load(mSpinnerImageStrings[position])
+                    .placeholder(Integer.parseInt(mSpinnerImageStrings[position]))
                     .fit().centerCrop()
                     .into(viewHolder.mSpinnerImage);
         }

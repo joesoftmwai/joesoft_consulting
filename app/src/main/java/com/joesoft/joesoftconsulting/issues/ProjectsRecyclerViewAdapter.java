@@ -41,9 +41,9 @@ public class ProjectsRecyclerViewAdapter extends RecyclerView.Adapter<ProjectsRe
         holder.mTextProjectName.setText(project.getName());
         holder.mTextDateCreated.setText(project.getTime_created().toString());
 
-        Picasso.get().load(project.getAvatar())
-                .fit().centerCrop()
-                .into(holder.mImageProject);
+//        Picasso.get().load(project.getAvatar())
+//                .fit().centerCrop()
+//                .into(holder.mImageProject);
 
     }
 
